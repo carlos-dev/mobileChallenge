@@ -23,17 +23,4 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-  button: {
-    width: '90%',
-    marginTop: 20,
-    paddingVertical: 10,
-    backgroundColor: '#3f9ecc',
-    borderRadius: 5,
-  },
-
-  textButton: {
-    fontSize: scaleFontSize(13),
-    textAlign: 'center',
-    color: '#fff',
-  },
 });

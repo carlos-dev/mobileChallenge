@@ -4,15 +4,16 @@ import {
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { StackNavigationProp } from '@react-navigation/stack';
-import { api } from '../../services/api';
 
+import { api } from '../../services/api';
+import { AppScreens, StackParamList } from '../../routes';
+import { useExpense } from '../../hooks/useExpense';
+
+import { global } from '../../styles/global';
 import { styles } from './styles';
 
 import backgroundImg from '../../assets/background.jpg';
-import { AppScreens, StackParamList } from '../../routes';
-import { useExpense } from '../../hooks/useExpense';
 
 type StartScreenNavigationProps = StackNavigationProp<StackParamList, AppScreens.Start>;
 
@@ -34,7 +35,7 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
       await AsyncStorage.setItem('token', response.data.token);
       navigation.navigate(AppScreens.Expenditure);
       login();
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.response.data);
     } finally {
       setLoading(false);
@@ -51,11 +52,11 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
         onChangeText={(text) => setEmail(text)}
       />
 
-      <RectButton style={styles.button} onPress={handleLogin}>
+      <RectButton style={global.button} onPress={handleLogin}>
         {loading ? (
           <ActivityIndicator size="small" color="#fff" />
         ) : (
-          <Text style={styles.textButton}>Entrar</Text>
+          <Text style={global.textButton}>Entrar</Text>
         )}
       </RectButton>
     </ImageBackground>

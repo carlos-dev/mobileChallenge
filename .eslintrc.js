@@ -32,6 +32,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     'no-param-reassign': [2, { props: false }],
     'react/prop-types': ['error', { ignore: ['navigation'] }],
+    'no-underscore-dangle': 'off',
   },
   settings: {
     'import/resolver': {

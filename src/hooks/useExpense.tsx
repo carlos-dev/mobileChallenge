@@ -1,14 +1,19 @@
 import React, {
-  createContext, useState, useContext, ReactNode,
+  createContext, useState, useContext, ReactNode, useEffect,
 } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { api } from '../services/api';
 
 interface Expense {
+  _id: string;
   date: string;
   item: string;
   value: number;
   additionalInfo: Object;
 }
+
+type ExpenseInput = Omit<Expense, '_id'>;
 
 interface ExpenseProviderProps {
   children: ReactNode;
@@ -17,27 +22,42 @@ interface ExpenseProviderProps {
 interface ExpensesContextData {
   expenses: Expense[];
   login: () => Promise<void>;
-  createExpense: (expense: Expense) => Promise<void>;
+  createExpense: (expense: ExpenseInput) => Promise<void>;
 }
 
 const ExpenseContext = createContext<ExpensesContextData>({} as ExpensesContextData);
 
 export const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  // console.log('login', token);
 
-  // useEffect(() => {
-  //   api.get('/expenses').then((response: AxiosResponse) => {
-  //     console.log(response.data);
-  //   });
-  // });
+  useEffect(() => {
+    const getExpenses = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          const response = await api.get('/expenses?page=1&perPage=10');
 
-  const createExpense = async (expenseInput: Expense) => {
+          setExpenses(response.data);
+        }
+      } catch (error) {
+        console.log('error', error.response.data);
+      }
+    };
+
+    getExpenses();
+    // api.get('/expenses').then((response: AxiosResponse) => {
+    //   console.log(response.data);
+    // });
+  }, []);
+
+  const createExpense = async (expenseInput: ExpenseInput) => {
     try {
       console.log('expenseInput', expenseInput);
 
       await api.post('/expenses', expenseInput);
 
-      setExpenses([...expenses, expenseInput]);
+      // setExpenses([...expenses, expenseInput]);
     } catch (error: any) {
       console.log(error.response.data);
     }

@@ -19,12 +19,12 @@ export const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 10,
     },
     shadowOpacity: 0.20,
     shadowRadius: 1.41,
 
-    elevation: 4,
+    elevation: 5,
   },
 
   title: {

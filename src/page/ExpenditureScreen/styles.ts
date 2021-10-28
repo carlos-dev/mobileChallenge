@@ -30,4 +30,27 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
   },
+
+  expense: {
+    backgroundColor: '#fff',
+    borderRadius: 5,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+
+    elevation: 5,
+  },
+
+  expenseTitle: {
+
+  },
+
+  expenseValue: {
+
+  },
 });

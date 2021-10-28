@@ -31,7 +31,7 @@ module.exports = {
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
     'no-param-reassign': [2, { props: false }],
-
+    'react/prop-types': ['error', { ignore: ['navigation'] }],
   },
   settings: {
     'import/resolver': {

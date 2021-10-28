@@ -1,14 +1,13 @@
 import React from 'react';
-import {
-  View, Text, TouchableOpacity, ScrollView,
-} from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import moment from 'moment';
 
 import { useExpense } from '../../hooks/useExpense';
 
-import { styles } from './styles';
 import { Header } from '../../components/Header';
+import { Expense } from '../../components/Expense';
+
+import { styles } from './styles';
 
 export function ExpenditureScreen({ navigation }) {
   const { expenses } = useExpense();
@@ -23,17 +22,13 @@ export function ExpenditureScreen({ navigation }) {
   );
 
   const contentExpenses = () => (
-    <ScrollView contentContainerStyle={styles.scrollView}>
-      {expenses.map((expense) => (
-        <TouchableOpacity style={styles.expense} key={expense._id} activeOpacity={0.7}>
-          <View>
-            <Text style={styles.expenseText}>{expense.item}</Text>
-            <Text style={styles.expenseText}>{expense.value}</Text>
-          </View>
-          <Text style={styles.expenseDate}>{moment.utc(expense.date).format('DD/MM/YYYY')}</Text>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+    <FlatList
+      data={expenses}
+      keyExtractor={(item) => item._id}
+      renderItem={({ item }) => (
+        <Expense data={item} navigation={navigation} />
+      )}
+    />
   );
 
   return (

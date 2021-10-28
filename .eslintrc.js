@@ -30,6 +30,8 @@ module.exports = {
     '@typescript-eslint/no-shadow': ['error'],
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
+    'no-param-reassign': [2, { props: false }],
+
   },
   settings: {
     'import/resolver': {

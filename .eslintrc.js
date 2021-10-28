@@ -33,6 +33,7 @@ module.exports = {
     'no-param-reassign': [2, { props: false }],
     'react/prop-types': ['error', { ignore: ['navigation'] }],
     'no-underscore-dangle': 'off',
+    'react/prop-types': 'off',
   },
   settings: {
     'import/resolver': {

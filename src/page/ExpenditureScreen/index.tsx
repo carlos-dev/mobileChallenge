@@ -8,8 +8,9 @@ import moment from 'moment';
 import { useExpense } from '../../hooks/useExpense';
 
 import { styles } from './styles';
+import { Header } from '../../components/Header';
 
-export function ExpenditureScreen() {
+export function ExpenditureScreen({ navigation }) {
   const { expenses } = useExpense();
 
   const contentWhitoutExpenses = () => (
@@ -37,6 +38,8 @@ export function ExpenditureScreen() {
 
   return (
     <View style={styles.container}>
+      <Header navigation={navigation} title="Despesa" />
+
       {expenses.length ? (
         contentExpenses()
       ) : (

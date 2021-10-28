@@ -12,6 +12,7 @@ import { styles } from './styles';
 
 import backgroundImg from '../../assets/background.jpg';
 import { AppScreens, StackParamList } from '../../routes';
+import { useExpense } from '../../hooks/useExpense';
 
 type StartScreenNavigationProps = StackNavigationProp<StackParamList, AppScreens.Start>;
 
@@ -23,6 +24,8 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
 
+  const { login } = useExpense();
+
   const handleLogin = async () => {
     setLoading(true);
     try {
@@ -30,6 +33,7 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
 
       await AsyncStorage.setItem('token', response.data.token);
       navigation.navigate(AppScreens.Expenditure);
+      login();
     } catch (error) {
       console.log(error.response.data);
     } finally {

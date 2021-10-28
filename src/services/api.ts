@@ -10,11 +10,7 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
-    const routes = [
-      '/start',
-    ];
-
-    if (!routes.includes(config.route)) {
+    if (!config.url!.startsWith('/start')) {
       const token = await AsyncStorage.getItem('token');
 
       config.headers.authorization = `Bearer ${token}`;

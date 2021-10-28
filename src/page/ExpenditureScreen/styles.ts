@@ -31,9 +31,20 @@ export const styles = StyleSheet.create({
     color: '#fff',
   },
 
+  scrollView: {
+    alignItems: 'center',
+  },
+
   expense: {
+    width: '90%',
     backgroundColor: '#fff',
+    marginBottom: '3%',
+    paddingVertical: '4%',
+    paddingHorizontal: '4%',
     borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
 
     shadowColor: '#000',
     shadowOffset: {
@@ -46,11 +57,11 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
 
-  expenseTitle: {
-
+  expenseText: {
+    fontSize: scaleFontSize(13),
   },
 
-  expenseValue: {
-
+  expenseDate: {
+    fontSize: scaleFontSize(11),
   },
 });

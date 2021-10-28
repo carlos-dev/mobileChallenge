@@ -1,6 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import {
+  View, Text, TouchableOpacity, ScrollView,
+} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
+import moment from 'moment';
 
 import { useExpense } from '../../hooks/useExpense';
 
@@ -8,8 +11,6 @@ import { styles } from './styles';
 
 export function ExpenditureScreen() {
   const { expenses } = useExpense();
-
-  console.log('expenses', expenses);
 
   const contentWhitoutExpenses = () => (
     <View style={styles.wrapper}>
@@ -21,15 +22,17 @@ export function ExpenditureScreen() {
   );
 
   const contentExpenses = () => (
-    <View style={styles.wrapper}>
-
+    <ScrollView contentContainerStyle={styles.scrollView}>
       {expenses.map((expense) => (
-        <View style={styles.expense} key={expense._id}>
-          <Text style={styles.expenseTitle}>{expense.item}</Text>
-          <Text style={styles.expenseValue}>{expense.value}</Text>
-        </View>
+        <TouchableOpacity style={styles.expense} key={expense._id} activeOpacity={0.7}>
+          <View>
+            <Text style={styles.expenseText}>{expense.item}</Text>
+            <Text style={styles.expenseText}>{expense.value}</Text>
+          </View>
+          <Text style={styles.expenseDate}>{moment.utc(expense.date).format('DD/MM/YYYY')}</Text>
+        </TouchableOpacity>
       ))}
-    </View>
+    </ScrollView>
   );
 
   return (

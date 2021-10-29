@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, Text, TextInput, ActivityIndicator,
+  View, Text, TextInput, ActivityIndicator, ScrollView,
 } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import { TextInputMask } from 'react-native-masked-text';
@@ -32,6 +32,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
   const [date, setDate] = useState('');
   const [item, setItem] = useState('');
   const [value, setValue] = useState(0);
+  const [description, setDescription] = useState('');
 
   const { getExpenses } = useExpense();
   const route: any = useRoute<RouteProp<ParamList, 'Detail'>>();
@@ -64,7 +65,9 @@ export const EditExpenseScreen = ({ navigation }: any) => {
       date: dateFormatted,
       item,
       value,
-      additionalInfo: {},
+      additionalInfo: {
+        description,
+      },
     };
 
     try {
@@ -99,7 +102,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.alignCenter} style={styles.container}>
       <Header navigation={navigation} title="Editar despesa" hasBackButton />
 
       <View style={global.viewInput}>
@@ -134,6 +137,17 @@ export const EditExpenseScreen = ({ navigation }: any) => {
         />
       </View>
 
+      <View style={global.viewInput}>
+        <Text style={global.label}>Descrição</Text>
+        <TextInput
+          multiline
+          numberOfLines={3}
+          style={global.input}
+          value={description}
+          onChangeText={(text) => setDescription(text)}
+        />
+      </View>
+
       <RectButton style={global.button} onPress={handleEditExpense}>
         {loading === 'EDIT' ? (
           <ActivityIndicator size="small" color="#fff" />
@@ -149,6 +163,6 @@ export const EditExpenseScreen = ({ navigation }: any) => {
           <Text style={global.textButton}>Excluir</Text>
         )}
       </RectButton>
-    </View>
+    </ScrollView>
   );
 };

@@ -17,6 +17,7 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
   const [date, setDate] = useState('');
   const [item, setItem] = useState('');
   const [value, setValue] = useState(0);
+  const [description, setDescription] = useState('');
 
   const { getExpenses } = useExpense();
 
@@ -31,7 +32,9 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
         date: dateFormatted,
         item,
         value,
-        additionalInfo: {},
+        additionalInfo: {
+          description,
+        },
       });
 
       setDate('');
@@ -82,6 +85,17 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
           value={value.toString()}
           style={global.input}
           onChangeText={(text) => setValue(Number(text))}
+        />
+      </View>
+
+      <View style={global.viewInput}>
+        <Text style={global.label}>Descrição</Text>
+        <TextInput
+          multiline
+          numberOfLines={3}
+          style={global.input}
+          value={description}
+          onChangeText={(text) => setDescription(text)}
         />
       </View>
 

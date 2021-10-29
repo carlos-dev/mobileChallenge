@@ -5,12 +5,14 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import { AppScreens } from '../../routes';
 
+type AdditionalInfo = { description?: string };
+
 type ExpenseProps = {
   _id: string;
   date: string;
   item: string;
   value: number;
-  additionalInfo: Object;
+  additionalInfo: AdditionalInfo;
 }
 
 type Props = {
@@ -27,6 +29,8 @@ export const Expense = ({ data, navigation }: Props) => (
     <View>
       <Text style={styles.expenseText}>{data.item}</Text>
       <Text style={styles.expenseText}>{data.value}</Text>
+      <Text style={styles.expenseDescription}>lorem</Text>
+      <View style={styles.divider} />
     </View>
     <Text style={styles.expenseDate}>{moment.utc(data.date).format('DD/MM/YYYY')}</Text>
   </TouchableOpacity>

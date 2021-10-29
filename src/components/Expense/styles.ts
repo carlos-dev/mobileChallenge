@@ -9,9 +9,7 @@ export const styles = StyleSheet.create({
     paddingVertical: '4%',
     paddingHorizontal: '4%',
     borderRadius: 5,
-    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
     alignSelf: 'center',
 
     shadowColor: '#000',
@@ -31,5 +29,17 @@ export const styles = StyleSheet.create({
 
   expenseDate: {
     fontSize: scaleFontSize(11),
+    alignSelf: 'flex-end',
+  },
+
+  expenseDescription: {
+    fontSize: scaleFontSize(12),
+  },
+
+  divider: {
+    width: '100%',
+    height: 1,
+    backgroundColor: '#ccc',
+    marginVertical: '2%',
   },
 });

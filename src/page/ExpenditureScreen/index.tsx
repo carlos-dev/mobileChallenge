@@ -8,6 +8,7 @@ import { Header } from '../../components/Header';
 import { Expense } from '../../components/Expense';
 
 import { styles } from './styles';
+import { global } from '../../styles/global';
 
 export const ExpenditureScreen = ({ navigation }) => {
   const { expenses } = useExpense();
@@ -15,9 +16,6 @@ export const ExpenditureScreen = ({ navigation }) => {
   const contentWhitoutExpenses = () => (
     <View style={styles.wrapper}>
       <Text style={styles.title}>Não há despesas</Text>
-      <RectButton style={styles.button}>
-        <Text style={styles.textButton}>Adicionar Despesa</Text>
-      </RectButton>
     </View>
   );
 
@@ -40,6 +38,11 @@ export const ExpenditureScreen = ({ navigation }) => {
       ) : (
         contentWhitoutExpenses()
       )}
+      <View style={styles.footer}>
+        <RectButton style={global.button}>
+          <Text style={global.textButton}>Adicionar Despesa</Text>
+        </RectButton>
+      </View>
     </View>
   );
 };

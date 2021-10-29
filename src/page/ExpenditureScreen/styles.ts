@@ -17,22 +17,25 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  button: {
-    width: '90%',
-    marginTop: 20,
-    paddingVertical: 10,
-    backgroundColor: '#3f9ecc',
-    borderRadius: 5,
-  },
-
-  textButton: {
-    fontSize: scaleFontSize(13),
-    textAlign: 'center',
-    color: '#fff',
-  },
-
   expenseList: {
     alignItems: 'center',
   },
 
+  footer: {
+    width: '100%',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+    paddingBottom: 20,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 10,
+    shadowRadius: 0.41,
+    elevation: 10,
+  },
 });

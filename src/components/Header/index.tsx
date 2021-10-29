@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import IconArrow from 'react-native-vector-icons/AntDesign';
-import scaleFontSize from '../../utils/scaleFontSize';
+
+import { scaleFontSize } from '../../utils/scaleFontSize';
 
 import { styles } from './styles';
 

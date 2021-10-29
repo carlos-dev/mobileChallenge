@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
-import scaleFontSize from '../utils/scaleFontSize';
+
+import { scaleFontSize } from '../utils/scaleFontSize';
 
 export const global = StyleSheet.create({
   button: {

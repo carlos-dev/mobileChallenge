@@ -6,6 +6,8 @@ import { RectButton } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+import { SnackbarComponent } from '../../components/Snackbar';
+
 import { api } from '../../services/api';
 import { AppScreens, StackParamList } from '../../routes';
 import { useExpense } from '../../hooks/useExpense';
@@ -21,6 +23,7 @@ interface StartScreenProps {
 
 export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [email, setEmail] = useState('');
 
   const { getExpenses } = useExpense();
@@ -31,12 +34,17 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
       const response = await api.get(`/start/${email}`);
 
       await AsyncStorage.setItem('token', response.data.token);
-      navigation.navigate(AppScreens.Expenditure);
+      navigation.navigate(AppScreens.Expenses);
       getExpenses();
-    } catch (error: any) {
-      console.log(error.response.data);
+    } catch (err: any) {
+      setError(true);
+      console.log(err.response.data);
     } finally {
       setLoading(false);
+
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
     }
   };
 
@@ -57,6 +65,8 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
           <Text style={global.textButton}>Entrar</Text>
         )}
       </RectButton>
+
+      <SnackbarComponent error={error} />
     </View>
   );
 };

@@ -14,6 +14,7 @@ import { global } from '../../styles/global';
 import { useExpense } from '../../hooks/useExpense';
 
 import { Header } from '../../components/Header';
+import { SnackbarComponent } from '../../components/Snackbar';
 
 import { getExpense } from '../../services/getExpense';
 import { deletexpense } from '../../services/deleteExpense';
@@ -41,6 +42,7 @@ interface EditExpenseScreenProps {
 
 export const EditExpenseScreen: FunctionComponent<EditExpenseScreenProps> = ({ navigation }) => {
   const [loading, setLoading] = useState<Loading>(Loading.default);
+  const [error, setError] = useState(false);
   const [date, setDate] = useState('');
   const [item, setItem] = useState('');
   const [value, setValue] = useState(0);
@@ -58,8 +60,8 @@ export const EditExpenseScreen: FunctionComponent<EditExpenseScreenProps> = ({ n
         setItem(data.item);
         setValue(data.value);
         setDescription(data.additionalInfo.description);
-      } catch (error: any) {
-        console.log(error.response.data);
+      } catch (err: any) {
+        console.log(err.response.data);
       }
     };
 
@@ -83,37 +85,31 @@ export const EditExpenseScreen: FunctionComponent<EditExpenseScreenProps> = ({ n
       },
     };
 
-    console.log(objExpense);
+    const response = await editExpense(objExpense);
 
-    try {
-      const response = await editExpense(objExpense);
-
-      if (response !== null) {
-        getExpenses();
-        navigation.goBack();
-      }
-    } catch (error: any) {
-      console.log(error.response.data);
-    } finally {
-      setLoading(Loading.default);
+    if (response !== null) {
+      getExpenses();
+      navigation.goBack();
+    } else {
+      setError(true);
     }
+    setLoading(Loading.default);
+
+    setTimeout(() => {
+      setError(false);
+    }, 3000);
   };
 
   const handleDeleteExpense = async () => {
     setLoading(Loading.delete);
 
-    try {
-      const response = await deletexpense(route.params.id);
+    const response = await deletexpense(route.params.id);
 
-      if (response) {
-        getExpenses();
-        navigation.goBack();
-      }
-    } catch (error: any) {
-      console.log(error.response.data);
-    } finally {
-      setLoading(Loading.default);
+    if (response) {
+      getExpenses();
+      navigation.goBack();
     }
+    setLoading(Loading.default);
   };
 
   return (
@@ -178,6 +174,8 @@ export const EditExpenseScreen: FunctionComponent<EditExpenseScreenProps> = ({ n
           <Text style={global.textButton}>Excluir</Text>
         )}
       </RectButton>
+
+      <SnackbarComponent error={error} />
     </ScrollView>
   );
 };

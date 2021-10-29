@@ -16,6 +16,7 @@ import { createExpense } from '../../services/createExpense';
 import { useExpense } from '../../hooks/useExpense';
 
 import { AppScreens, StackParamList } from '../../routes';
+import { SnackbarComponent } from '../../components/Snackbar';
 
 type CreateScreenNavigationProps = StackNavigationProp<StackParamList, AppScreens.CreateExpense>;
 
@@ -25,6 +26,7 @@ interface CreateExpenseScreenProps {
 
 export const CreateExpenseScreen: FunctionComponent<CreateExpenseScreenProps> = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [date, setDate] = useState('');
   const [item, setItem] = useState('');
   const [value, setValue] = useState(0);
@@ -38,29 +40,31 @@ export const CreateExpenseScreen: FunctionComponent<CreateExpenseScreenProps> = 
     const dateFormatted = `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
 
     setLoading(true);
-    try {
-      const response = await createExpense({
-        date: dateFormatted,
-        item,
-        value,
-        additionalInfo: {
-          description,
-        },
-      });
 
+    const response = await createExpense({
+      date: dateFormatted,
+      item,
+      value,
+      additionalInfo: {
+        description,
+      },
+    });
+
+    if (response !== null) {
       setDate('');
       setItem('');
       setValue(0);
-
-      if (response !== null) {
-        getExpenses();
-        navigation.goBack();
-      }
-    } catch (error: any) {
-      console.log(error.response.data);
-    } finally {
-      setLoading(false);
+      getExpenses();
+      navigation.goBack();
+    } else {
+      setError(true);
     }
+
+    setLoading(false);
+
+    setTimeout(() => {
+      setError(false);
+    }, 3000);
   };
 
   return (
@@ -117,6 +121,8 @@ export const CreateExpenseScreen: FunctionComponent<CreateExpenseScreenProps> = 
           <Text style={global.textButton}>Salvar</Text>
         )}
       </RectButton>
+
+      <SnackbarComponent error={error} />
     </View>
   );
 };

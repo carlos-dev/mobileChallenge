@@ -1,6 +1,6 @@
 import React, { useState, FunctionComponent } from 'react';
 import {
-  Text, TextInput, ImageBackground, ActivityIndicator,
+  Text, TextInput, ActivityIndicator, View,
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,8 +12,6 @@ import { useExpense } from '../../hooks/useExpense';
 
 import { global } from '../../styles/global';
 import { styles } from './styles';
-
-import backgroundImg from '../../assets/background.jpg';
 
 type StartScreenNavigationProps = StackNavigationProp<StackParamList, AppScreens.Start>;
 
@@ -43,7 +41,7 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
   };
 
   return (
-    <ImageBackground style={styles.container} source={backgroundImg}>
+    <View style={styles.container}>
       <Text style={styles.label}>Digite seu email</Text>
 
       <TextInput
@@ -59,6 +57,6 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
           <Text style={global.textButton}>Entrar</Text>
         )}
       </RectButton>
-    </ImageBackground>
+    </View>
   );
 };

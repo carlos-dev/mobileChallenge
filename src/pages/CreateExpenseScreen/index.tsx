@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+/* eslint-disable max-len */
+import React, { FunctionComponent, useState } from 'react';
 import {
   View, Text, TextInput, ActivityIndicator,
 } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import { RectButton } from 'react-native-gesture-handler';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { styles } from './styles';
 import { global } from '../../styles/global';
+
 import { Header } from '../../components/Header';
 
 import { createExpense } from '../../services/createExpense';
 import { useExpense } from '../../hooks/useExpense';
 
-export const CreateExpenseScreen = ({ navigation }: any) => {
+import { AppScreens, StackParamList } from '../../routes';
+
+type CreateScreenNavigationProps = StackNavigationProp<StackParamList, AppScreens.CreateExpense>;
+
+interface CreateExpenseScreenProps {
+  navigation: CreateScreenNavigationProps;
+}
+
+export const CreateExpenseScreen: FunctionComponent<CreateExpenseScreenProps> = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState('');
   const [item, setItem] = useState('');

@@ -29,7 +29,7 @@ export const Expense = ({ data, navigation }: Props) => (
     <View>
       <Text style={styles.expenseText}>{data.item}</Text>
       <Text style={styles.expenseText}>{data.value}</Text>
-      <Text style={styles.expenseDescription}>lorem</Text>
+      <Text style={styles.expenseDescription}>{data.additionalInfo.description}</Text>
       <View style={styles.divider} />
     </View>
     <Text style={styles.expenseDate}>{moment.utc(data.date).format('DD/MM/YYYY')}</Text>

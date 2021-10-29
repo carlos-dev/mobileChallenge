@@ -1,19 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
   View, Text, TextInput, ActivityIndicator, ScrollView,
 } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import { TextInputMask } from 'react-native-masked-text';
 import { RectButton } from 'react-native-gesture-handler';
-
 import moment from 'moment';
+import { StackNavigationProp } from '@react-navigation/stack';
+
 import { styles } from './styles';
 import { global } from '../../styles/global';
+
 import { useExpense } from '../../hooks/useExpense';
+
 import { Header } from '../../components/Header';
+
 import { getExpense } from '../../services/getExpense';
 import { deletexpense } from '../../services/deleteExpense';
 import { editExpense } from '../../services/editExpense';
+
+import { AppScreens, StackParamList } from '../../routes';
 
 type ParamList = {
   Detail: {
@@ -27,7 +33,13 @@ enum Loading {
   delete = 'DELETE',
 }
 
-export const EditExpenseScreen = ({ navigation }: any) => {
+type EditScreenNavigationProps = StackNavigationProp<StackParamList, AppScreens.EditExpense>;
+
+interface EditExpenseScreenProps {
+  navigation: EditScreenNavigationProps;
+}
+
+export const EditExpenseScreen: FunctionComponent<EditExpenseScreenProps> = ({ navigation }) => {
   const [loading, setLoading] = useState<Loading>(Loading.default);
   const [date, setDate] = useState('');
   const [item, setItem] = useState('');
@@ -45,6 +57,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
         setDate(moment.utc(data.date).format('DD/MM/YYYY'));
         setItem(data.item);
         setValue(data.value);
+        setDescription(data.additionalInfo.description);
       } catch (error: any) {
         console.log(error.response.data);
       }
@@ -69,6 +82,8 @@ export const EditExpenseScreen = ({ navigation }: any) => {
         description,
       },
     };
+
+    console.log(objExpense);
 
     try {
       const response = await editExpense(objExpense);

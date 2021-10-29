@@ -2,21 +2,21 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { StartScreen } from './page/StartScreen';
-import { ExpenditureScreen } from './page/ExpenditureScreen';
-import { CreateExpenseScreen } from './page/CreateExpenseScreen';
-import { EditExpenseScreen } from './page/EditExpenseScreen';
+import { StartScreen } from './pages/StartScreen';
+import { ExpensesScreen } from './pages/ExpensesScreen';
+import { CreateExpenseScreen } from './pages/CreateExpenseScreen';
+import { EditExpenseScreen } from './pages/EditExpenseScreen';
 
 export enum AppScreens {
   Start = 'Start',
-  Expenditure = 'Expenditure',
+  Expenses = 'Expenses',
   CreateExpense = 'CreateExpense',
   EditExpense = 'EditExpense',
 }
 
 export type StackParamList = {
   Start: undefined;
-  Expenditure: undefined;
+  Expenses: undefined;
   CreateExpense: undefined;
   EditExpense: undefined;
 };
@@ -32,7 +32,7 @@ export function StackNavigation() {
         }}
       >
         <Stack.Screen name={AppScreens.Start} component={StartScreen} />
-        <Stack.Screen name={AppScreens.Expenditure} component={ExpenditureScreen} />
+        <Stack.Screen name={AppScreens.Expenses} component={ExpensesScreen} />
         <Stack.Screen name={AppScreens.EditExpense} component={EditExpenseScreen} />
         <Stack.Screen name={AppScreens.CreateExpense} component={CreateExpenseScreen} />
       </Stack.Navigator>

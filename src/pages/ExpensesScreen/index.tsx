@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useExpense } from '../../hooks/useExpense';
 
 import { Header } from '../../components/Header';
@@ -9,9 +10,16 @@ import { Expense } from '../../components/Expense';
 
 import { styles } from './styles';
 import { global } from '../../styles/global';
-import { AppScreens } from '../../routes';
 
-export const ExpenditureScreen = ({ navigation }) => {
+import { AppScreens, StackParamList } from '../../routes';
+
+type ExpensesScreenNavigationProps = StackNavigationProp<StackParamList, AppScreens.Expenses>;
+
+interface ExpensesScreenProps {
+  navigation: ExpensesScreenNavigationProps;
+}
+
+export const ExpensesScreen: FunctionComponent<ExpensesScreenProps> = ({ navigation }) => {
   const { expenses } = useExpense();
 
   const contentWhitoutExpenses = () => (
@@ -19,6 +27,8 @@ export const ExpenditureScreen = ({ navigation }) => {
       <Text style={styles.title}>Não há despesas</Text>
     </View>
   );
+
+  console.log(expenses);
 
   const contentExpenses = () => (
     <FlatList

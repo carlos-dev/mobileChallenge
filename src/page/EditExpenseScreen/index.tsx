@@ -13,6 +13,7 @@ import { useExpense } from '../../hooks/useExpense';
 import { Header } from '../../components/Header';
 import { getExpense } from '../../services/getExpense';
 import { deletexpense } from '../../services/deleteExpense';
+import { editExpense } from '../../services/editExpense';
 
 type ParamList = {
   Detail: {
@@ -26,7 +27,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
   const [item, setItem] = useState('');
   const [value, setValue] = useState(0);
 
-  const { editExpense, getExpenses } = useExpense();
+  const { getExpenses } = useExpense();
   const route: any = useRoute<RouteProp<ParamList, 'Detail'>>();
 
   useEffect(() => {
@@ -80,6 +81,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
       const response = await deletexpense(route.params.id);
 
       if (response) {
+        getExpenses();
         navigation.goBack();
       }
     } catch (error: any) {

@@ -4,9 +4,8 @@ import React, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { api } from '../services/api';
-import { editExpense } from '../services/editExpense';
 
-import { Expense, ExpenseWhitoutId } from '../@types/expenseProps';
+import { Expense } from '../@types/expenseProps';
 
 interface ExpenseProviderProps {
   children: ReactNode;
@@ -14,8 +13,6 @@ interface ExpenseProviderProps {
 interface ExpensesContextData {
   expenses: Expense[];
   login: () => Promise<void>;
-  createExpense: (expense: ExpenseWhitoutId) => Promise<void>;
-  editExpense: (expense: Expense) => Promise<void>;
   getExpenses: () => Promise<void>;
 }
 
@@ -45,22 +42,9 @@ export const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
     loadExpenses();
   }, []);
 
-  const createExpense = async (expenseInput: ExpenseWhitoutId) => {
-    try {
-      console.log('expenseInput', expenseInput);
-
-      await api.post('/expenses', expenseInput);
-
-      // setExpenses([...expenses, expenseInput]);
-    } catch (error: any) {
-      console.log(error.response.data);
-    }
-  };
-
   const login = async () => {
     try {
-      const response = await api.get('/expenses?page=1&perPage=10');
-      console.log(response.data);
+      await api.get('/expenses?page=1&perPage=10');
     } catch (error: any) {
       console.log(error.response.data);
     }
@@ -69,7 +53,7 @@ export const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
   return (
     <ExpenseContext.Provider
       value={{
-        expenses, login, createExpense, editExpense, getExpenses,
+        expenses, login, getExpenses,
       }}
     >
       {children}

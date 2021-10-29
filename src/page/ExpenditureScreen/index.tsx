@@ -9,6 +9,7 @@ import { Expense } from '../../components/Expense';
 
 import { styles } from './styles';
 import { global } from '../../styles/global';
+import { AppScreens } from '../../routes';
 
 export const ExpenditureScreen = ({ navigation }) => {
   const { expenses } = useExpense();
@@ -39,7 +40,10 @@ export const ExpenditureScreen = ({ navigation }) => {
         contentWhitoutExpenses()
       )}
       <View style={styles.footer}>
-        <RectButton style={global.button}>
+        <RectButton
+          style={global.button}
+          onPress={() => navigation.navigate(AppScreens.CreateExpense)}
+        >
           <Text style={global.textButton}>Adicionar Despesa</Text>
         </RectButton>
       </View>

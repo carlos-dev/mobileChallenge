@@ -11,9 +11,10 @@ export const editExpense = async (expense: Expense) => {
       additionalInfo: {},
     });
 
-    console.log('expenseInput', response.data);
-    // return response.data;
+    return response.data;
   } catch (error: any) {
     console.log(error.response.data);
   }
+
+  return null;
 };

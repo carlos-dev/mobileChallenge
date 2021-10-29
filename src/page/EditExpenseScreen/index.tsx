@@ -20,13 +20,6 @@ type ParamList = {
   }
 };
 
-type ExpenseProps = {
-  value: number;
-  item: string;
-  date: string;
-  additionalInfo: Object;
-}
-
 export const EditExpenseScreen = ({ navigation }: any) => {
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState('');
@@ -39,7 +32,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
   useEffect(() => {
     const handleGetExpense = async () => {
       try {
-        const data: ExpenseProps = await getExpense(route.params.id);
+        const data = await getExpense(route.params.id);
 
         setDate(moment.utc(data.date).format('DD/MM/YYYY'));
         setItem(data.item);
@@ -60,13 +53,17 @@ export const EditExpenseScreen = ({ navigation }: any) => {
     setLoading(true);
 
     try {
-      await editExpense({
+      const response = await editExpense({
         _id: route.params.id,
         date: dateFormatted,
         item,
         value,
         additionalInfo: {},
       });
+
+      if (response !== null) {
+        navigation.goBack();
+      }
     } catch (error: any) {
       console.log(error.response.data);
     } finally {

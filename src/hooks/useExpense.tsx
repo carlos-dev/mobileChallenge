@@ -12,7 +12,6 @@ interface ExpenseProviderProps {
 }
 interface ExpensesContextData {
   expenses: Expense[];
-  login: () => Promise<void>;
   getExpenses: () => Promise<void>;
 }
 
@@ -42,18 +41,10 @@ export const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
     loadExpenses();
   }, []);
 
-  const login = async () => {
-    try {
-      await api.get('/expenses?page=1&perPage=10');
-    } catch (error: any) {
-      console.log(error.response.data);
-    }
-  };
-
   return (
     <ExpenseContext.Provider
       value={{
-        expenses, login, getExpenses,
+        expenses, getExpenses,
       }}
     >
       {children}

@@ -25,7 +25,7 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
 
-  const { login } = useExpense();
+  const { getExpenses } = useExpense();
 
   const handleLogin = async () => {
     setLoading(true);
@@ -34,7 +34,7 @@ export const StartScreen: FunctionComponent<StartScreenProps> = ({ navigation })
 
       await AsyncStorage.setItem('token', response.data.token);
       navigation.navigate(AppScreens.Expenditure);
-      login();
+      getExpenses();
     } catch (error: any) {
       console.log(error.response.data);
     } finally {

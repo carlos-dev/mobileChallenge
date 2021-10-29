@@ -31,10 +31,10 @@ export function StackNavigation() {
           headerShown: false,
         }}
       >
+        <Stack.Screen name={AppScreens.Start} component={StartScreen} />
         <Stack.Screen name={AppScreens.Expenditure} component={ExpenditureScreen} />
         <Stack.Screen name={AppScreens.EditExpense} component={EditExpenseScreen} />
         <Stack.Screen name={AppScreens.CreateExpense} component={CreateExpenseScreen} />
-        <Stack.Screen name={AppScreens.Start} component={StartScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -12,6 +12,7 @@ import { global } from '../../styles/global';
 import { useExpense } from '../../hooks/useExpense';
 import { Header } from '../../components/Header';
 import { getExpense } from '../../services/getExpense';
+import { deletexpense } from '../../services/deleteExpense';
 
 type ParamList = {
   Detail: {
@@ -60,11 +61,27 @@ export const EditExpenseScreen = ({ navigation }: any) => {
 
     try {
       await editExpense({
+        _id: route.params.id,
         date: dateFormatted,
         item,
         value,
         additionalInfo: {},
       });
+    } catch (error: any) {
+      console.log(error.response.data);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteExpense = async () => {
+    setLoading(true);
+    try {
+      const response = await deletexpense(route.params.id);
+
+      if (response) {
+        navigation.goBack();
+      }
     } catch (error: any) {
       console.log(error.response.data);
     }
@@ -114,7 +131,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
         )}
       </RectButton>
 
-      <RectButton style={[global.button, styles.buttonDelete]}>
+      <RectButton style={[global.button, styles.buttonDelete]} onPress={handleDeleteExpense}>
         {loading ? (
           <ActivityIndicator size="small" color="#fff" />
         ) : (

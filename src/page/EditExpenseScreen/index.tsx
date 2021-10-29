@@ -21,8 +21,14 @@ type ParamList = {
   }
 };
 
+enum Loading {
+  default = 'DEFAULT',
+  edit = 'EDIT',
+  delete = 'DELETE',
+}
+
 export const EditExpenseScreen = ({ navigation }: any) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<Loading>(Loading.default);
   const [date, setDate] = useState('');
   const [item, setItem] = useState('');
   const [value, setValue] = useState(0);
@@ -51,7 +57,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
 
     const dateFormatted = `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
 
-    setLoading(true);
+    setLoading(Loading.edit);
 
     const objExpense = {
       _id: route.params.id,
@@ -71,12 +77,13 @@ export const EditExpenseScreen = ({ navigation }: any) => {
     } catch (error: any) {
       console.log(error.response.data);
     } finally {
-      setLoading(false);
+      setLoading(Loading.default);
     }
   };
 
   const handleDeleteExpense = async () => {
-    setLoading(true);
+    setLoading(Loading.delete);
+
     try {
       const response = await deletexpense(route.params.id);
 
@@ -86,12 +93,23 @@ export const EditExpenseScreen = ({ navigation }: any) => {
       }
     } catch (error: any) {
       console.log(error.response.data);
+    } finally {
+      setLoading(Loading.default);
     }
   };
 
   return (
     <View style={styles.container}>
       <Header navigation={navigation} title="Editar despesa" hasBackButton />
+
+      <View style={global.viewInput}>
+        <Text style={global.label}>Item</Text>
+        <TextInput
+          style={global.input}
+          value={item}
+          onChangeText={(text) => setItem(text)}
+        />
+      </View>
 
       <View style={global.viewInput}>
         <Text style={global.label}>Data</Text>
@@ -107,15 +125,6 @@ export const EditExpenseScreen = ({ navigation }: any) => {
       </View>
 
       <View style={global.viewInput}>
-        <Text style={global.label}>Item</Text>
-        <TextInput
-          style={global.input}
-          value={item}
-          onChangeText={(text) => setItem(text)}
-        />
-      </View>
-
-      <View style={global.viewInput}>
         <Text style={global.label}>Valor</Text>
         <TextInput
           keyboardType="numeric"
@@ -126,7 +135,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
       </View>
 
       <RectButton style={global.button} onPress={handleEditExpense}>
-        {loading ? (
+        {loading === 'EDIT' ? (
           <ActivityIndicator size="small" color="#fff" />
         ) : (
           <Text style={global.textButton}>Salvar</Text>
@@ -134,7 +143,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
       </RectButton>
 
       <RectButton style={[global.button, styles.buttonDelete]} onPress={handleDeleteExpense}>
-        {loading ? (
+        {loading === 'DELETE' ? (
           <ActivityIndicator size="small" color="#fff" />
         ) : (
           <Text style={global.textButton}>Excluir</Text>

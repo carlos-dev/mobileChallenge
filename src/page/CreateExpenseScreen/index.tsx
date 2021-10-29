@@ -39,7 +39,7 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
       setValue(0);
 
       if (response !== null) {
-        getExpenses(true);
+        getExpenses();
         navigation.goBack();
       }
     } catch (error: any) {
@@ -54,6 +54,15 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
       <Header navigation={navigation} title="Criar despesa" hasBackButton />
 
       <View style={global.viewInput}>
+        <Text style={global.label}>Item</Text>
+        <TextInput
+          style={global.input}
+          value={item}
+          onChangeText={(text) => setItem(text)}
+        />
+      </View>
+
+      <View style={global.viewInput}>
         <Text style={global.label}>Data</Text>
         <TextInputMask
           type="datetime"
@@ -63,15 +72,6 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
           value={date}
           onChangeText={(text) => setDate(text)}
           style={global.input}
-        />
-      </View>
-
-      <View style={global.viewInput}>
-        <Text style={global.label}>Item</Text>
-        <TextInput
-          style={global.input}
-          value={item}
-          onChangeText={(text) => setItem(text)}
         />
       </View>
 

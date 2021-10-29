@@ -4,25 +4,18 @@ import React, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { api } from '../services/api';
+import { editExpense } from '../services/editExpense';
 
-interface Expense {
-  _id: string;
-  date: string;
-  item: string;
-  value: number;
-  additionalInfo: Object;
-}
-
-type ExpenseInput = Omit<Expense, '_id'>;
+import { Expense, ExpenseInput } from '../@types/expenseProps';
 
 interface ExpenseProviderProps {
   children: ReactNode;
 }
-
 interface ExpensesContextData {
   expenses: Expense[];
   login: () => Promise<void>;
   createExpense: (expense: ExpenseInput) => Promise<void>;
+  editExpense: (expense: ExpenseInput) => Promise<void>;
 }
 
 const ExpenseContext = createContext<ExpensesContextData>({} as ExpensesContextData);
@@ -73,7 +66,11 @@ export const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
   };
 
   return (
-    <ExpenseContext.Provider value={{ expenses, login, createExpense }}>
+    <ExpenseContext.Provider
+      value={{
+        expenses, login, createExpense, editExpense,
+      }}
+    >
       {children}
     </ExpenseContext.Provider>
   );

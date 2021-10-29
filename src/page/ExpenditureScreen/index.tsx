@@ -9,7 +9,7 @@ import { Expense } from '../../components/Expense';
 
 import { styles } from './styles';
 
-export function ExpenditureScreen({ navigation }) {
+export const ExpenditureScreen = ({ navigation }) => {
   const { expenses } = useExpense();
 
   const contentWhitoutExpenses = () => (
@@ -42,4 +42,4 @@ export function ExpenditureScreen({ navigation }) {
       )}
     </View>
   );
-}
+};

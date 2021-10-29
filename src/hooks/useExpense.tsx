@@ -7,7 +7,6 @@ import { api } from '../services/api';
 import { editExpense } from '../services/editExpense';
 
 import { Expense, ExpenseWhitoutId } from '../@types/expenseProps';
-import { getExpenses } from '../services/getExpenses';
 
 interface ExpenseProviderProps {
   children: ReactNode;
@@ -17,24 +16,32 @@ interface ExpensesContextData {
   login: () => Promise<void>;
   createExpense: (expense: ExpenseWhitoutId) => Promise<void>;
   editExpense: (expense: Expense) => Promise<void>;
+  getExpenses: () => Promise<void>;
 }
 
 const ExpenseContext = createContext<ExpensesContextData>({} as ExpensesContextData);
 
 export const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  // console.log('login', token);
+
+  const getExpenses = async () => {
+    try {
+      const response = await api.get('/expenses?page=1&perPage=10');
+      setExpenses([...response.data]);
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  };
 
   useEffect(() => {
     const loadExpenses = async () => {
       const token = await AsyncStorage.getItem('token');
 
       if (token) {
-        const response = await getExpenses();
-
-        setExpenses([...response]);
+        getExpenses();
       }
     };
+
     loadExpenses();
   }, []);
 
@@ -62,7 +69,7 @@ export const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
   return (
     <ExpenseContext.Provider
       value={{
-        expenses, login, createExpense, editExpense,
+        expenses, login, createExpense, editExpense, getExpenses,
       }}
     >
       {children}

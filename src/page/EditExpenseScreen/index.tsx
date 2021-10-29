@@ -26,7 +26,7 @@ export const EditExpenseScreen = ({ navigation }: any) => {
   const [item, setItem] = useState('');
   const [value, setValue] = useState(0);
 
-  const { editExpense } = useExpense();
+  const { editExpense, getExpenses } = useExpense();
   const route: any = useRoute<RouteProp<ParamList, 'Detail'>>();
 
   useEffect(() => {
@@ -52,16 +52,19 @@ export const EditExpenseScreen = ({ navigation }: any) => {
 
     setLoading(true);
 
+    const objExpense = {
+      _id: route.params.id,
+      date: dateFormatted,
+      item,
+      value,
+      additionalInfo: {},
+    };
+
     try {
-      const response = await editExpense({
-        _id: route.params.id,
-        date: dateFormatted,
-        item,
-        value,
-        additionalInfo: {},
-      });
+      const response = await editExpense(objExpense);
 
       if (response !== null) {
+        getExpenses();
         navigation.goBack();
       }
     } catch (error: any) {

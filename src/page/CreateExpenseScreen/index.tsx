@@ -46,8 +46,8 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <Header navigation={navigation} title="Criar despesa" hasBackButton />
 
-      <View style={styles.viewInput}>
-        <Text style={styles.label}>Data</Text>
+      <View style={global.viewInput}>
+        <Text style={global.label}>Data</Text>
         <TextInputMask
           type="datetime"
           options={{
@@ -55,25 +55,25 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
           }}
           value={date}
           onChangeText={(text) => setDate(text)}
-          style={styles.input}
+          style={global.input}
         />
       </View>
 
-      <View style={styles.viewInput}>
-        <Text style={styles.label}>Item</Text>
+      <View style={global.viewInput}>
+        <Text style={global.label}>Item</Text>
         <TextInput
-          style={styles.input}
+          style={global.input}
           value={item}
           onChangeText={(text) => setItem(text)}
         />
       </View>
 
-      <View style={styles.viewInput}>
-        <Text style={styles.label}>Valor</Text>
+      <View style={global.viewInput}>
+        <Text style={global.label}>Valor</Text>
         <TextInput
           keyboardType="numeric"
           value={value.toString()}
-          style={styles.input}
+          style={global.input}
           onChangeText={(text) => setValue(Number(text))}
         />
       </View>

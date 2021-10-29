@@ -15,4 +15,24 @@ export const global = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
   },
+
+  viewInput: {
+    marginBottom: 30,
+    width: '90%',
+  },
+
+  label: {
+    color: '#333',
+    fontSize: scaleFontSize(13),
+    marginBottom: 10,
+  },
+
+  input: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    fontSize: scaleFontSize(13),
+    paddingHorizontal: 10,
+  },
 });

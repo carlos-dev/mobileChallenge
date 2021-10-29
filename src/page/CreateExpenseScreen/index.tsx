@@ -7,8 +7,10 @@ import { RectButton } from 'react-native-gesture-handler';
 
 import { styles } from './styles';
 import { global } from '../../styles/global';
-import { useExpense } from '../../hooks/useExpense';
 import { Header } from '../../components/Header';
+
+import { createExpense } from '../../services/createExpense';
+import { useExpense } from '../../hooks/useExpense';
 
 export const CreateExpenseScreen = ({ navigation }: any) => {
   const [loading, setLoading] = useState(false);
@@ -16,7 +18,7 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
   const [item, setItem] = useState('');
   const [value, setValue] = useState(0);
 
-  const { createExpense } = useExpense();
+  const { getExpenses } = useExpense();
 
   const handleCreateExpense = async () => {
     const dateSplit = date.split('/');
@@ -25,7 +27,7 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
 
     setLoading(true);
     try {
-      await createExpense({
+      const response = await createExpense({
         date: dateFormatted,
         item,
         value,
@@ -35,6 +37,11 @@ export const CreateExpenseScreen = ({ navigation }: any) => {
       setDate('');
       setItem('');
       setValue(0);
+
+      if (response !== null) {
+        getExpenses(true);
+        navigation.goBack();
+      }
     } catch (error: any) {
       console.log(error.response.data);
     } finally {

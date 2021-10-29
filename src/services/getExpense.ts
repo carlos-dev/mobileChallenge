@@ -8,4 +8,6 @@ export const getExpense = async (id: string) => {
   } catch (error: any) {
     console.log(error.response.data);
   }
+
+  return null;
 };

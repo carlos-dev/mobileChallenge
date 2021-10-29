@@ -1,4 +1,4 @@
-export interface Expense {
+export type Expense = {
   _id: string;
   date: string;
   item: string;
@@ -6,4 +6,4 @@ export interface Expense {
   additionalInfo: Object;
 }
 
-export type ExpenseInput = Omit<Expense, '_id'>;
+export type ExpenseWhitoutId = Omit<Expense, '_id'>;

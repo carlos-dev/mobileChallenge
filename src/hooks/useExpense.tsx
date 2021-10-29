@@ -7,6 +7,7 @@ import { api } from '../services/api';
 import { editExpense } from '../services/editExpense';
 
 import { Expense, ExpenseWhitoutId } from '../@types/expenseProps';
+import { getExpenses } from '../services/getExpenses';
 
 interface ExpenseProviderProps {
   children: ReactNode;
@@ -25,23 +26,16 @@ export const ExpenseProvider = ({ children }: ExpenseProviderProps) => {
   // console.log('login', token);
 
   useEffect(() => {
-    const getExpenses = async () => {
-      try {
-        const token = await AsyncStorage.getItem('token');
-        if (token) {
-          const response = await api.get('/expenses?page=1&perPage=10');
+    const loadExpenses = async () => {
+      const token = await AsyncStorage.getItem('token');
 
-          setExpenses(response.data);
-        }
-      } catch (error) {
-        console.log('error', error.response.data);
+      if (token) {
+        const response = await getExpenses();
+
+        setExpenses([...response]);
       }
     };
-
-    getExpenses();
-    // api.get('/expenses').then((response: AxiosResponse) => {
-    //   console.log(response.data);
-    // });
+    loadExpenses();
   }, []);
 
   const createExpense = async (expenseInput: ExpenseWhitoutId) => {

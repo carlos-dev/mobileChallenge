@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, { FunctionComponent, useState } from 'react';
 import {
-  View, Text, TextInput, ActivityIndicator,
+  View, Text, TextInput, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView,
 } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import { RectButton } from 'react-native-gesture-handler';
@@ -68,61 +68,66 @@ export const CreateExpenseScreen: FunctionComponent<CreateExpenseScreenProps> = 
   };
 
   return (
-    <View style={styles.container}>
-      <Header navigation={navigation} title="Criar despesa" hasBackButton />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+    >
+      <ScrollView contentContainerStyle={global.alignCenter} style={styles.container}>
+        <Header navigation={navigation} title="Criar despesa" hasBackButton />
 
-      <View style={global.viewInput}>
-        <Text style={global.label}>Item</Text>
-        <TextInput
-          style={global.input}
-          value={item}
-          onChangeText={(text) => setItem(text)}
-        />
-      </View>
+        <View style={global.viewInput}>
+          <Text style={global.label}>Item</Text>
+          <TextInput
+            style={global.input}
+            value={item}
+            onChangeText={(text) => setItem(text)}
+          />
+        </View>
 
-      <View style={global.viewInput}>
-        <Text style={global.label}>Data</Text>
-        <TextInputMask
-          type="datetime"
-          options={{
-            format: 'DD/MM/YYYY',
-          }}
-          value={date}
-          onChangeText={(text) => setDate(text)}
-          style={global.input}
-        />
-      </View>
+        <View style={global.viewInput}>
+          <Text style={global.label}>Data</Text>
+          <TextInputMask
+            type="datetime"
+            options={{
+              format: 'DD/MM/YYYY',
+            }}
+            value={date}
+            onChangeText={(text) => setDate(text)}
+            style={global.input}
+          />
+        </View>
 
-      <View style={global.viewInput}>
-        <Text style={global.label}>Valor</Text>
-        <TextInput
-          keyboardType="numeric"
-          value={value.toString()}
-          style={global.input}
-          onChangeText={(text) => setValue(Number(text))}
-        />
-      </View>
+        <View style={global.viewInput}>
+          <Text style={global.label}>Valor</Text>
+          <TextInput
+            keyboardType="numeric"
+            value={value.toString()}
+            style={global.input}
+            onChangeText={(text) => setValue(Number(text))}
+          />
+        </View>
 
-      <View style={global.viewInput}>
-        <Text style={global.label}>Descrição</Text>
-        <TextInput
-          multiline
-          numberOfLines={3}
-          style={global.input}
-          value={description}
-          onChangeText={(text) => setDescription(text)}
-        />
-      </View>
+        <View style={global.viewInput}>
+          <Text style={global.label}>Descrição</Text>
+          <TextInput
+            multiline
+            numberOfLines={3}
+            style={global.input}
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+          />
+        </View>
 
-      <RectButton style={global.button} onPress={handleCreateExpense}>
-        {loading ? (
-          <ActivityIndicator size="small" color="#fff" />
-        ) : (
-          <Text style={global.textButton}>Salvar</Text>
-        )}
-      </RectButton>
+        <RectButton style={global.button} onPress={handleCreateExpense}>
+          {loading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={global.textButton}>Salvar</Text>
+          )}
+        </RectButton>
 
-      <SnackbarComponent error={error} />
-    </View>
+        <SnackbarComponent error={error} />
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };

@@ -28,8 +28,6 @@ export const ExpensesScreen: FunctionComponent<ExpensesScreenProps> = ({ navigat
     </View>
   );
 
-  console.log(expenses);
-
   const contentExpenses = () => (
     <FlatList
       data={expenses}
@@ -41,7 +39,7 @@ export const ExpensesScreen: FunctionComponent<ExpensesScreenProps> = ({ navigat
   );
 
   return (
-    <View style={styles.container}>
+    <View style={global.container}>
       <Header navigation={navigation} title="Despesa" />
 
       {expenses.length ? (

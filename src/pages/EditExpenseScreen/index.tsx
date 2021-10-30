@@ -113,7 +113,7 @@ export const EditExpenseScreen: FunctionComponent<EditExpenseScreenProps> = ({ n
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.alignCenter} style={styles.container}>
+    <ScrollView contentContainerStyle={global.alignCenter} style={global.container}>
       <Header navigation={navigation} title="Editar despesa" hasBackButton />
 
       <View style={global.viewInput}>

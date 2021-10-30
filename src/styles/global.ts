@@ -3,6 +3,10 @@ import { StyleSheet } from 'react-native';
 import { scaleFontSize } from '../utils/scaleFontSize';
 
 export const global = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
   button: {
     width: '90%',
     marginTop: 20,
@@ -35,5 +39,9 @@ export const global = StyleSheet.create({
     borderRadius: 5,
     fontSize: scaleFontSize(13),
     paddingHorizontal: 10,
+  },
+
+  alignCenter: {
+    alignItems: 'center',
   },
 });

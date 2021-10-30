@@ -28,7 +28,10 @@ export const Expense = ({ data, navigation }: Props) => (
   >
     <View>
       <Text style={styles.expenseText}>{data.item}</Text>
-      <Text style={styles.expenseText}>{data.value}</Text>
+      <Text style={styles.expenseText}>
+        R$
+        {data.value.toFixed(2)}
+      </Text>
       <Text style={styles.expenseDescription}>{data.additionalInfo.description}</Text>
       <View style={styles.divider} />
     </View>
